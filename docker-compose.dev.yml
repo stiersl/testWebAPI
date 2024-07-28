@@ -1,0 +1,38 @@
+
+services:
+  testweatherapi:
+    image: ${REGISTRY:-localhost}/testweatherapi:${TAG:-latest}
+    build:
+      context: ./src/TestWeatherAPI
+      dockerfile: Dockerfile
+    ports:
+      - "6969:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - PUG_DATABASE_HOST=${PUG_DATABASE_HOST}
+      - PUG_DATABASE_NAME=${PUG_DATABASE_NAME}
+      - PUG_DATABASE_USER=sa
+      - PUG_DATABASE_PASSWORD_FILE=/run/secrets/pug_database_password
+      - Logging__LogLevel__Default=Information
+    secrets:
+      - site.crt
+      - site.key
+      - pug_database_password
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          cpus: "1"
+          memory: 0.50G
+      restart_policy:
+        condition: on-failure
+secrets:
+  site.crt:
+    file: .secrets/pugsvrcert.pem
+  site.key:
+    file: .secrets/pugsvrkey.pem
+  pug_database_password:
+    file: .secrets/pug_database_password

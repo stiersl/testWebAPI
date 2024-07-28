@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+   "saDev": {
+      "commandName": "Project",
+    "environmentVariables": {
+      "ASPNETCORE_ENVIRONMENT": "saDev",
+      "PUG_DATABASE_HOST": "pugsvr.puglocal",
+      "PUG_DATABASE_NAME": "PUGDB",
+      "PUG_DATABASE_USER": "sa",
+      "PUG_DATABASE_PASSWORD_FILE": "proficy_database_password",
+      "Logging__LogLevel__Default": "Information"
+    },
+      "dotnetRunMessages": true,
+      "externalUrlConfiguration": true,
+      "applicationUrl": "https://localhost:6969"
+    }
+  }
+}
